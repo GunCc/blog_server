@@ -20,9 +20,10 @@ func Viper(path ...string) *viper.Viper {
 
 	// 获取配置
 	if len(path) == 0 {
+		// 增加命令函输入 -c 增加文件名名称
 		flag.StringVar(&config, "c", "", "choose config file.")
+		// 一定要运行这个 要不不会保存config
 		flag.Parse()
-
 		if config == "" { // 判断命令函参数是不是为空
 			// 判断 internal.configEnv 常量是否为空
 			if configEnv := os.Getenv(internal.ConfigEnv); configEnv == "" {
@@ -55,7 +56,7 @@ func Viper(path ...string) *viper.Viper {
 	v.SetConfigFile(config)
 	// 设置文件类型
 	v.SetConfigType("yaml")
-	// 读取配置
+	// 读取配置 看看格式是否正确
 	err := v.ReadInConfig()
 	// 打印报错信息
 	if err != nil {
@@ -77,5 +78,6 @@ func Viper(path ...string) *viper.Viper {
 
 	// 获取当前绝对路径
 	global.BLOG_CONFIG.AutoCode.Root, _ = filepath.Abs("..")
+	fmt.Println(global.BLOG_CONFIG.AutoCode)
 	return v
 }
