@@ -67,3 +67,13 @@ db-list:
   - disable: true
     type: "mysql" # 数据库类型
     alias-name: "" # 数据库名称
+
+jwt:
+  # 签名密钥
+  signing-key: mgBlog
+  # 有效时间
+  expires-time: 7d
+  # 缓冲时间
+  buffer-time: 1d
+  # 发行人
+  issuer: mango

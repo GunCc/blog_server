@@ -8,4 +8,5 @@ type Server struct {
 	System   System          `yaml:"system"`
 	Mysql    Mysql           `yaml:"mysql"`
 	DBList   []SpecializedDB `yaml:"db-list"`
+	JWT      JWT             `yaml:"jwt"`
 }
