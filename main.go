@@ -3,6 +3,7 @@ package main
 import (
 	"blog_server/core"
 	"blog_server/global"
+	"blog_server/initialize"
 )
 
 func main() {
@@ -10,7 +11,16 @@ func main() {
 	global.BLOG_VP = core.Viper()
 	// 增加zap日志库
 	global.BLOG_LOG = core.Zap()
-	// 链接数据库
+	// 初始化数据库配置
+	global.BLOG_DB = initialize.Gorm()
+
+	// 初始化数据库
+	initialize.DBList()
+	if global.BLOG_DB != nil {
+		initialize.RegisterTables(global.BLOG_DB)
+		d, _ := global.BLOG_DB.DB()
+		defer d.Close()
+	}
 	// 启动服务
 	core.RunWindowsServer()
 }

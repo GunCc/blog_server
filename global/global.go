@@ -14,4 +14,5 @@ var (
 	BLOG_VP     *viper.Viper
 	BLOG_CONFIG config.Server
 	BLOG_LOG    *zap.Logger
+	BLOG_DBList map[string]*gorm.DB
 )

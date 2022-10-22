@@ -26,3 +26,44 @@ zap:
   encode-level: LowercaseColorLevelEncoder
   stacktrace-key: stacktrace
   log-in-console: true
+
+system:
+  env: public
+  addr: 8888
+  db-type: mysql
+  oss-type: local
+  use-redis: false
+  use-multipoint: false
+  # IP 限制次数 一个小时15000次
+  iplimit-count: 15000
+  # IP限制一个小时
+  iplimit-time: 3600
+
+mysql:
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
+
+# 定时任务 github.com/robfig/cron/v3@v3.0.0
+Timer:
+  start: true
+  spec: "@daily"
+  detail:
+    - tableName: sys_operation_records
+      compareField: created_at
+      interval: 2160h
+    - tableName: jwt_blacklists
+      compareField: created_at
+      interval: 168h
+
+db-list:
+  - disable: true
+    type: "mysql" # 数据库类型
+    alias-name: "" # 数据库名称
