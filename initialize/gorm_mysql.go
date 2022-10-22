@@ -4,6 +4,7 @@ import (
 	"blog_server/config"
 	"blog_server/global"
 	"blog_server/initialize/internal"
+	"fmt"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -13,6 +14,8 @@ func GormMysql() *gorm.DB {
 	// 拿到关于数据库的所有配置
 	m := global.BLOG_CONFIG.Mysql
 	// 如果配置中没有设置数据库名称直接放回错误
+
+	fmt.Println("查看mysqldsn--------", m.Dsn())
 	if m.Dbname == "" {
 		return nil
 	}

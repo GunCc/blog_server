@@ -4,6 +4,7 @@ import (
 	"blog_server/core"
 	"blog_server/global"
 	"blog_server/initialize"
+	"fmt"
 )
 
 func main() {
@@ -14,8 +15,10 @@ func main() {
 	// 初始化数据库配置
 	global.BLOG_DB = initialize.Gorm()
 
+	fmt.Println("数据------------", global.BLOG_DB)
 	// 初始化数据库
 	initialize.DBList()
+
 	if global.BLOG_DB != nil {
 		initialize.RegisterTables(global.BLOG_DB)
 		d, _ := global.BLOG_DB.DB()
