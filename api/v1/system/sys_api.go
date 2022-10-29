@@ -2,8 +2,8 @@ package system
 
 import (
 	"blog_server/global"
+	"blog_server/model/commen/response"
 	"blog_server/model/system"
-	"blog_server/model/system/response"
 	"blog_server/utils"
 
 	"github.com/gin-gonic/gin"

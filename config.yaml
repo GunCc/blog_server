@@ -77,3 +77,15 @@ jwt:
   buffer-time: 1d
   # 发行人
   issuer: mango
+
+captcha:
+  #  验证码长度
+  key-long: 6
+  # 图片宽度
+  img-width: 240
+  # 图片高度
+  img-height: 80
+  # 图片最大倾斜
+  max-skew: 0.7
+  # 图片浮点数
+  dot-count: 80

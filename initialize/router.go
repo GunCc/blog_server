@@ -24,6 +24,7 @@ func Routers() *gin.Engine {
 		// 注册基础路由,这些是不用权限控制的
 
 		// useruserRouter.userRouter
+		systemRouter.InitBaseRouter(PublicGroup)
 	}
 
 	// 权限路由

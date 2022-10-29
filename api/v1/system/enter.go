@@ -4,6 +4,7 @@ import "blog_server/service"
 
 type ApiGroup struct {
 	SystemApiApi
+	BaseApi
 }
 
 var (

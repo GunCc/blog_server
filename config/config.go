@@ -9,4 +9,5 @@ type Server struct {
 	Mysql    Mysql           `yaml:"mysql"`
 	DBList   []SpecializedDB `yaml:"db-list"`
 	JWT      JWT             `yaml:"jwt"`
+	Captcha  Captcha         `yaml:"captcha"`
 }
