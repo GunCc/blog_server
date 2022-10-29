@@ -1,7 +1,13 @@
 package service
 
-import "blog_server/service/user"
+import (
+	"blog_server/service/system"
+	"blog_server/service/user"
+)
 
 type ServiceGroup struct {
-	UserServiceGroup user.UserGroup
+	SystemServiceGroup system.SystemService
+	UserServiceGroup   user.UserGroup
 }
+
+var ServiceGroupApp = new(ServiceGroup)

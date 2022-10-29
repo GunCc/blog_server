@@ -10,6 +10,7 @@ import (
 func Routers() *gin.Engine {
 	Router := gin.Default()
 	userRouter := routers.RouterGroupApp.User
+	systemRouter := routers.RouterGroupApp.System
 
 	// 做一个健康检测
 	// 公共路由
@@ -29,6 +30,7 @@ func Routers() *gin.Engine {
 	PrivateGroup := Router.Group("")
 	{
 		userRouter.InitUserRouter(PrivateGroup) // 注册用户相关路由
+		systemRouter.InitApiRouter(PrivateGroup)
 	}
 	return Router
 }
