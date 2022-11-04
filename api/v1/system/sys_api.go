@@ -20,7 +20,7 @@ func (s *SystemApiApi) CreateApi(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err := apiSerice.CreateApi(api); err != nil {
+	if err := apiService.CreateApi(api); err != nil {
 		global.BLOG_LOG.Error("创建失败！", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {

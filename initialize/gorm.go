@@ -25,7 +25,15 @@ func Gorm() *gorm.DB {
 func RegisterTables(db *gorm.DB) {
 	// 注册表
 	err := db.AutoMigrate(
+		// 系统模块表
 		system.SysApi{},
+		system.SysUser{},
+		system.SysBaseMenu{},
+		system.SysAuthority{},
+		system.SysOperationRecord{},
+		system.SysBaseMenuParameter{},
+		system.SysBaseMenuBtn{},
+		system.SysAuthorityBtn{},
 	)
 	if err != nil {
 		global.BLOG_LOG.Error("注册表失败", zap.Error(err))

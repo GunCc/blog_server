@@ -8,5 +8,7 @@ type ApiGroup struct {
 }
 
 var (
-	apiSerice = service.ServiceGroupApp.SystemServiceGroup.ApiService
+	apiService  = service.ServiceGroupApp.SystemServiceGroup.ApiService
+	userService = service.ServiceGroupApp.SystemServiceGroup.UserService
+	JwtService  = service.ServiceGroupApp.SystemServiceGroup.JwtService
 )

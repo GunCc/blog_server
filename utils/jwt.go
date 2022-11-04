@@ -4,6 +4,7 @@ import (
 	"blog_server/global"
 	"blog_server/model/system/request"
 	"errors"
+	"time"
 
 	jwt "github.com/golang-jwt/jwt/v4"
 )
@@ -52,4 +53,25 @@ func (j *JWT) ParseToken(tokenString string) (*request.CustomClaims, error) {
 	} else {
 		return nil, TokenInvalid
 	}
+}
+
+func (j *JWT) CreateClamis(baseClaims request.BaseClaims) request.CustomClaims {
+	bf, _ := ParseDuration(global.BLOG_CONFIG.JWT.BufferTime)
+	ep, _ := ParseDuration(global.BLOG_CONFIG.JWT.ExpiresTime)
+	claims := request.CustomClaims{
+		BaseClaims: baseClaims,
+		BufferTime: int64(bf),
+		StandardClaims: jwt.StandardClaims{
+			NotBefore: time.Now().Unix() - 1000, // 签名生效时间
+			ExpiresAt: time.Now().Add(ep).Unix(),
+			Issuer:    global.BLOG_CONFIG.JWT.Issuer,
+		},
+	}
+	return claims
+}
+
+// 创建一个token
+func (j *JWT) CreateToken(claims request.CustomClaims) (string, error) {
+	t := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+	return t.SignedString(j.SigningKey)
 }
