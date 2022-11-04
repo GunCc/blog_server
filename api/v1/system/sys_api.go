@@ -12,6 +12,14 @@ import (
 
 type SystemApiApi struct{}
 
+// @Tags SysApi
+// @Summary 创建基础api
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body system.SysApi true "api路径, api中文描述, api组, 方法"
+// @Success 200 {object} response.Response{msg=string} "创建基础api"
+// @Router /api/createApi [post]
 func (s *SystemApiApi) CreateApi(c *gin.Context) {
 	var api system.SysApi
 	// 解析json

@@ -7,6 +7,11 @@ import (
 	"fmt"
 )
 
+// @title 博客系统 Swagger
+// @version 0.0.1
+// @description Go 语言编程之旅：一起用 Go 做项目
+// @name x-token
+// @BasePath /
 func main() {
 	// 初始化Viper Viper就是一个可以解析.yaml 文件的一个golang 包
 	global.BLOG_VP = core.Viper()

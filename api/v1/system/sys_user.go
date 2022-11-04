@@ -14,6 +14,12 @@ import (
 	"go.uber.org/zap"
 )
 
+// @Tags Base
+// @Summary 用户登录
+// @Produce  application/json
+// @Param data body request.Login true "用户名, 密码, 验证码"
+// @Success 200 {object} systemRes.LoginResponse{data=systemRes.LoginResponse,msg=string} "返回包括用户信息,token,过期时间"
+// @Router /base/login [post]
 func (b *BaseApi) Login(c *gin.Context) {
 	var l request.Login
 	_ = c.ShouldBindJSON(&l)
@@ -39,6 +45,12 @@ func (b *BaseApi) Login(c *gin.Context) {
 	}
 }
 
+// @Tages SysUser
+// @Summary 用户注册账号
+// @Produce application/json
+// @Param data body request.Register true "用户米，昵称，密码，角色ID"
+// @Success 200 {object} systemRes.SysUserResponse{data=systemRes.SysUserResponse,msg=string} "用户注册账号，返回包括用户信息"
+// @Router /user/register [post]
 func (b *BaseApi) Register(c *gin.Context) {
 	var r request.Register
 	_ = c.ShouldBindJSON(&r)
