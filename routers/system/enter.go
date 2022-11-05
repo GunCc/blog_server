@@ -5,4 +5,5 @@ type RouterGroup struct {
 	BaseRouter
 	UserRouter
 	ArticleTypeRouter
+	ArticleTagRouter
 }

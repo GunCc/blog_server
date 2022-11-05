@@ -6,6 +6,7 @@ var (
 	// LoginVerify       = Rules{"CaptchaId": {NotEmpty()}, "Captcha": {NotEmpty()}, "Username": {NotEmpty()}, "Password": {NotEmpty()}}
 	RegisterVerify    = Rules{"Username": {NotEmpty()}, "NickName": {NotEmpty()}, "Password": {NotEmpty()}, "AuthorityId": {NotEmpty()}}
 	ArticleTypeVerify = Rules{"Title": {NotEmpty()}, "Icon": {NotEmpty()}}
+	ArticleTagVerify  = Rules{"Content": {NotEmpty()}, "Color": {NotEmpty()}}
 	IdVerify          = Rules{"ID": []string{NotEmpty()}}
 	PageInfoVerify    = Rules{"Page": {NotEmpty()}, "PageSize": {NotEmpty()}}
 )

@@ -42,6 +42,7 @@ func Routers() *gin.Engine {
 		systemRouter.InitApiRouter(PrivateGroup)
 		systemRouter.InitUserRouter(PrivateGroup)
 		systemRouter.InitArticleTypeRouter(PrivateGroup) // 文章标题相关路由
+		systemRouter.InitArticleTagRouter(PrivateGroup)
 	}
 	return Router
 }
