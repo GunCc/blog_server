@@ -5,4 +5,5 @@ type SystemService struct {
 	UserService
 	JwtService
 	OperationRecordService
+	ArticleTypeService
 }

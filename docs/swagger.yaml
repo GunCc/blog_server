@@ -84,6 +84,21 @@ definitions:
         description: 更新时间
         type: string
     type: object
+  system.SysArticleType:
+    properties:
+      createdAt:
+        description: 创建时间
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
   system.SysAuthority:
     properties:
       authorityId:
@@ -266,6 +281,102 @@ paths:
       summary: 创建基础api
       tags:
       - SysApi
+  /article/type/add:
+    post:
+      parameters:
+      - description: 标题，图标
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.SysArticleType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 新建标题
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 新增博客一级标题
+      tags:
+      - ArticleType
+  /article/type/delete:
+    delete:
+      parameters:
+      - description: 标题，图标
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.SysArticleType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除标题
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 删除博客一级标题
+      tags:
+      - ArticleType
+  /article/type/edit:
+    put:
+      parameters:
+      - description: 标题，图标
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.SysArticleType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 修改标题
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 修改博客一级标题
+      tags:
+      - ArticleType
+  /article/type/list:
+    get:
+      parameters:
+      - description: 标题，图标
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.SysArticleType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 修改标题
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 获取博客一级标题
+      tags:
+      - ArticleType
   /base/captcha:
     post:
       consumes:
@@ -339,4 +450,6 @@ paths:
                   type: string
               type: object
       summary: 用户注册账号
+      tags:
+      - SysUser
 swagger: "2.0"

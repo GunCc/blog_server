@@ -72,6 +72,6 @@ func (j *JWT) CreateClamis(baseClaims request.BaseClaims) request.CustomClaims {
 
 // 创建一个token
 func (j *JWT) CreateToken(claims request.CustomClaims) (string, error) {
-	t := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return t.SignedString(j.SigningKey)
 }

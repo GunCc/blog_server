@@ -66,6 +66,174 @@ const docTemplate = `{
                 }
             }
         },
+        "/article/type/add": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ArticleType"
+                ],
+                "summary": "新增博客一级标题",
+                "parameters": [
+                    {
+                        "description": "标题，图标",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysArticleType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "新建标题",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/article/type/delete": {
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ArticleType"
+                ],
+                "summary": "删除博客一级标题",
+                "parameters": [
+                    {
+                        "description": "标题，图标",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysArticleType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除标题",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/article/type/edit": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ArticleType"
+                ],
+                "summary": "修改博客一级标题",
+                "parameters": [
+                    {
+                        "description": "标题，图标",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysArticleType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改标题",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/article/type/list": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ArticleType"
+                ],
+                "summary": "获取博客一级标题",
+                "parameters": [
+                    {
+                        "description": "标题，图标",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysArticleType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改标题",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/base/captcha": {
             "post": {
                 "security": [
@@ -157,6 +325,9 @@ const docTemplate = `{
             "post": {
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "SysUser"
                 ],
                 "summary": "用户注册账号",
                 "parameters": [
@@ -315,6 +486,28 @@ const docTemplate = `{
                 },
                 "path": {
                     "description": "api路径",
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "system.SysArticleType": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
                     "type": "string"
                 },
                 "updatedAt": {

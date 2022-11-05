@@ -10,6 +10,7 @@ import (
 // @title 博客系统 Swagger
 // @version 0.0.1
 // @description Go 语言编程之旅：一起用 Go 做项目
+// @in header
 // @name x-token
 // @BasePath /
 func main() {

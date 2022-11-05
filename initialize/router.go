@@ -38,9 +38,10 @@ func Routers() *gin.Engine {
 	// 权限路由
 	PrivateGroup := Router.Group("")
 	{
-		userRouter.InitUserRouter(PrivateGroup) // 注册用户相关路由
+		userRouter.InitUserRouter(PrivateGroup) // 用户相关路由
 		systemRouter.InitApiRouter(PrivateGroup)
 		systemRouter.InitUserRouter(PrivateGroup)
+		systemRouter.InitArticleTypeRouter(PrivateGroup) // 文章标题相关路由
 	}
 	return Router
 }
