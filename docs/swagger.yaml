@@ -11,6 +11,15 @@ definitions:
       username:
         type: string
     type: object
+  request.PageInfo:
+    properties:
+      keyword:
+        type: integer
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
   request.Register:
     properties:
       authorityIds:
@@ -61,6 +70,31 @@ definitions:
       user:
         $ref: '#/definitions/system.SysUser'
     type: object
+  system.ArticleBlog:
+    properties:
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      enable:
+        type: boolean
+      icon:
+        type: string
+      id:
+        type: integer
+      sort:
+        type: integer
+      tags:
+        items:
+          $ref: '#/definitions/system.SysArticleTag'
+        type: array
+      title:
+        type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
   system.SysApi:
     properties:
       apiGroup:
@@ -80,6 +114,21 @@ definitions:
       path:
         description: api路径
         type: string
+      updatedAt:
+        description: 更新时间
+        type: string
+    type: object
+  system.SysArticleTag:
+    properties:
+      color:
+        type: string
+      content:
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      id:
+        type: integer
       updatedAt:
         description: 更新时间
         type: string
@@ -281,6 +330,102 @@ paths:
       summary: 创建基础api
       tags:
       - SysApi
+  /article/add:
+    post:
+      parameters:
+      - description: 标题，类别，标签，内容，标记
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.ArticleBlog'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 新建标题
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 新增文章
+      tags:
+      - Article
+  /article/delete:
+    delete:
+      parameters:
+      - description: 文章ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.ArticleBlog'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除文章
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 删除文章
+      tags:
+      - Article
+  /article/edit:
+    put:
+      parameters:
+      - description: 标题，类别，标签，内容，标记
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.ArticleBlog'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 修改文章
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 修改文章
+      tags:
+      - Article
+  /article/list:
+    get:
+      parameters:
+      - description: 筛选条件
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.PageInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取表
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 获取博客列表
+      tags:
+      - Article
   /article/type/add:
     post:
       parameters:

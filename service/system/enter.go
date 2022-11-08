@@ -7,4 +7,5 @@ type SystemService struct {
 	OperationRecordService
 	ArticleTypeService
 	ArticleTagService
+	ArticleService
 }

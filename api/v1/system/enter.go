@@ -7,6 +7,7 @@ type ApiGroup struct {
 	BaseApi
 	ArticleTypeApi
 	ArticleTagApi
+	ArticleApi
 }
 
 var (
@@ -15,4 +16,5 @@ var (
 	JwtService         = service.ServiceGroupApp.SystemServiceGroup.JwtService
 	ArticleTypeService = service.ServiceGroupApp.SystemServiceGroup.ArticleTypeService
 	ArticleTagService  = service.ServiceGroupApp.SystemServiceGroup.ArticleTagService
+	ArticleService     = service.ServiceGroupApp.SystemServiceGroup.ArticleService
 )

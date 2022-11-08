@@ -9,4 +9,5 @@ var (
 	ArticleTagVerify  = Rules{"Content": {NotEmpty()}, "Color": {NotEmpty()}}
 	IdVerify          = Rules{"ID": []string{NotEmpty()}}
 	PageInfoVerify    = Rules{"Page": {NotEmpty()}, "PageSize": {NotEmpty()}}
+	ArticleVerify     = Rules{"Title": {NotEmpty()}, "SysArticleType": {NotEmpty()}, "Tags": {NotEmpty()}, "Content": {NotEmpty()}}
 )
