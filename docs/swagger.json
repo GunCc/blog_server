@@ -226,6 +226,117 @@
                 }
             }
         },
+        "/article/tag/add": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SysArticleTag"
+                ],
+                "summary": "新增博客标签",
+                "parameters": [
+                    {
+                        "description": "新建标签",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysArticleTag"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/article/tag/delete": {
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SysArticleTag"
+                ],
+                "summary": "删除博客标签",
+                "parameters": [
+                    {
+                        "description": "删除标签",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysArticleTag"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/article/tag/edit": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SysArticleTag"
+                ],
+                "summary": "修改博客标签",
+                "parameters": [
+                    {
+                        "description": "修改标签",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.SysArticleTag"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/article/tag/list": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SysArticleTag"
+                ],
+                "summary": "获取博客标签",
+                "parameters": [
+                    {
+                        "description": "标题，图标",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.PageInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改标题",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/article/type/add": {
             "post": {
                 "produces": [

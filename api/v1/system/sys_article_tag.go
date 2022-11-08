@@ -17,9 +17,8 @@ type ArticleTagApi struct {
 // @Tags SysArticleTag
 // @Summary 新增博客标签
 // @Produce application/json
-// @Param data body system.SysArticleTag{msg=string} "新建标签"
+// @Param data body system.SysArticleTag true "新建标签"
 // @Router /article/tag/add [post]
-
 func (A *ArticleTagApi) CreateArticleTag(c *gin.Context) {
 	var at system.SysArticleTag
 	_ = c.ShouldBindJSON(at)
@@ -39,9 +38,8 @@ func (A *ArticleTagApi) CreateArticleTag(c *gin.Context) {
 // @Tags SysArticleTag
 // @Summary  修改博客标签
 // @Produce application/json
-// @Param data body system.SysArticleTag{msg=string} "修改标签"
+// @Param data body system.SysArticleTag true "修改标签"
 // @Router /article/tag/edit [PUT]
-
 func (A *ArticleTagApi) EditArticleTag(c *gin.Context) {
 	var at system.SysArticleTag
 	_ = c.ShouldBindJSON(at)
@@ -61,9 +59,8 @@ func (A *ArticleTagApi) EditArticleTag(c *gin.Context) {
 // @Tags SysArticleTag
 // @Summary  删除博客标签
 // @Produce application/json
-// @Param data body system.SysArticleTag{msg=string} "删除标签"
+// @Param data body system.SysArticleTag true "删除标签"
 // @Router /article/tag/delete [delete]
-
 func (A *ArticleTagApi) DeleteArticleTag(c *gin.Context) {
 	var at system.SysArticleTag
 	_ = c.ShouldBindJSON(at)
@@ -80,6 +77,12 @@ func (A *ArticleTagApi) DeleteArticleTag(c *gin.Context) {
 	}
 }
 
+// @Tags SysArticleTag
+// @Summary 获取博客标签
+// @Produce application/json
+// @Param data body request.PageInfo true "标题，图标"
+// @Success 200 {object} response.Response{msg=string} "修改标题"
+// @Router /article/tag/list   [get]
 func (A *ArticleTagApi) GetArticleTag(c *gin.Context) {
 	var pageInfo request.PageInfo
 	_ = c.ShouldBindJSON(&pageInfo)
