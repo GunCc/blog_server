@@ -104,7 +104,6 @@ func OperationRecord() gin.HandlerFunc {
 			record.Body = string(newBody)
 			defer respPool.Put(newBody[:0])
 		}
-
 		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
 			global.BLOG_LOG.Error("操作记录创建失败：", zap.Error(err))
 		}

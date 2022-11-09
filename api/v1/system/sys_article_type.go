@@ -23,8 +23,10 @@ type ArticleTypeApi struct {
 // @Router /article/type/add  [post]
 func (A *ArticleTypeApi) CreateArticleType(c *gin.Context) {
 	var at system.SysArticleType
-	_ = c.ShouldBindJSON(&at)
-	fmt.Println("--------------------", at.Title)
+	if err := c.ShouldBindJSON(&at); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 	if err := utils.Verify(at, utils.ArticleTypeVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -46,9 +48,13 @@ func (A *ArticleTypeApi) CreateArticleType(c *gin.Context) {
 // @Router /article/type/delete  [delete]
 func (A *ArticleTypeApi) DeleteArticleType(c *gin.Context) {
 	var at system.SysArticleType
-	_ = c.ShouldBindJSON(&at)
-	if err := utils.Verify(at.ID, utils.IdVerify); err != nil {
+	if err := c.ShouldBindJSON(&at); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if err := utils.Verify(at, utils.IdVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		// response.FailWithDetailed(err, "标题删除失败", c)
 		return
 	}
 
@@ -92,6 +98,7 @@ func (A *ArticleTypeApi) GetArticleType(c *gin.Context) {
 	var pageInfo request.PageInfo
 
 	_ = c.ShouldBindJSON(&pageInfo)
+	fmt.Println("数据：=============", pageInfo)
 	if err := utils.Verify(pageInfo, utils.PageInfoVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

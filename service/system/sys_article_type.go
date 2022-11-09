@@ -34,6 +34,7 @@ func (articleTypeService *ArticleTypeService) CreateArticleType(at system.SysArt
 func (articleTypeService *ArticleTypeService) DeleteArticleType(id uint) (err error) {
 	var at system.SysArticleType
 	err = global.BLOG_DB.Where("id = ?", id).Delete(&at).Error
+
 	if err != nil {
 		return err
 	}

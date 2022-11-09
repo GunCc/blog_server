@@ -17,6 +17,6 @@ func (r *ArticleTypeRouter) InitArticleTypeRouter(Router *gin.RouterGroup) {
 		articleTypeRouter.POST("/add", articleTypeApi.CreateArticleType)
 		articleTypeRouter.DELETE("/delete", articleTypeApi.DeleteArticleType)
 		articleTypeRouter.PUT("/edit", articleTypeApi.EditArticleType)
-		articleTypeRouter.GET("/list", articleTypeApi.GetArticleType)
+		articleTypeRouter.POST("/list", articleTypeApi.GetArticleType)
 	}
 }

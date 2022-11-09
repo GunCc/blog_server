@@ -38,6 +38,8 @@ func RegisterTables(db *gorm.DB) {
 		system.SysArticleType{},
 		// 标签
 		system.SysArticleTag{},
+		// 文章
+		system.SysArticleBlog{},
 	)
 	if err != nil {
 		global.BLOG_LOG.Error("注册表失败", zap.Error(err))

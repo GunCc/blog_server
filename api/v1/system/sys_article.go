@@ -5,6 +5,7 @@ import (
 	"blog_server/model/commen/request"
 	"blog_server/model/commen/response"
 	"blog_server/model/system"
+	sysReq "blog_server/model/system/request"
 	"blog_server/utils"
 
 	"github.com/gin-gonic/gin"
@@ -17,15 +18,30 @@ type ArticleApi struct {
 // @Tags Article
 // @Summary 新增文章
 // @Produce application/json
-// @Param data body system.ArticleBlog true "标题，类别，标签，内容，标记"
+// @Param data body system.SysArticleBlog true "标题，类别，标签，内容，标记"
 // @Success 200 {object} response.Response{msg=string} "新建标题"
 // @Router /article/add  [post]
 func (A *ArticleApi) CreateArticle(c *gin.Context) {
-	var a system.ArticleBlog
-	_ = c.ShouldBindJSON(&a)
-	if err := utils.Verify(a, utils.ArticleVerify); err != nil {
+	var reqData sysReq.ReqArticleBlog
+	_ = c.ShouldBindJSON(&reqData)
+
+	if err := utils.Verify(reqData, utils.ArticleVerify); err != nil {
 		response.FailWithMessage("操作失败", c)
 		return
+	}
+	var a system.SysArticleBlog
+	if typeInfo, err := ArticleService.GetArticleType(reqData); err != nil {
+		global.BLOG_LOG.Error("操作失败", zap.Error(err))
+		response.FailWithDetailed(err, "操作失败", c)
+		return
+	} else {
+		a.SysArticleTypeIds = typeInfo
+	}
+	if tags, err := ArticleService.GetArticleTags(reqData); err != nil {
+		response.FailWithMessage("操作失败", c)
+		return
+	} else {
+		a.TagsIds = tags
 	}
 	if err := ArticleService.CreateArticle(a); err != nil {
 		global.BLOG_LOG.Error("操作失败", zap.Error(err))
@@ -39,12 +55,13 @@ func (A *ArticleApi) CreateArticle(c *gin.Context) {
 // @Tags Article
 // @Summary 删除文章
 // @Produce application/json
-// @Param data body system.ArticleBlog.ID true "文章ID"
+// @Param data body system.SysArticleBlog.ID true "文章ID"
 // @Success 200 {object} response.Response{msg=string} "删除文章"
 // @Router /article/delete [delete]
 func (A *ArticleApi) DeleteArticle(c *gin.Context) {
-	var a system.ArticleBlog
-	if err := utils.Verify(a.ID, utils.IdVerify); err != nil {
+	var a system.SysArticleBlog
+	_ = c.ShouldBindJSON(a)
+	if err := utils.Verify(a, utils.IdVerify); err != nil {
 		response.FailWithMessage("操作失败", c)
 		return
 	}
@@ -56,11 +73,11 @@ func (A *ArticleApi) DeleteArticle(c *gin.Context) {
 // @Tags Article
 // @Summary 修改文章
 // @Produce application/json
-// @Param data body system.ArticleBlog true "标题，类别，标签，内容，标记"
+// @Param data body system.SysArticleBlog true "标题，类别，标签，内容，标记"
 // @Success 200 {object} response.Response{msg=string} "修改文章"
 // @Router /article/edit [put]
 func (A *ArticleApi) EditArticle(c *gin.Context) {
-	var a system.ArticleBlog
+	var a system.SysArticleBlog
 	_ = c.ShouldBindJSON(&a)
 	if err := utils.Verify(a, utils.ArticleVerify); err != nil {
 		response.FailWithMessage("操作失败", c)

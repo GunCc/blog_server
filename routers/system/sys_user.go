@@ -9,7 +9,7 @@ import (
 type UserRouter struct {
 }
 
-func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
+func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 	// userRouter := Router.Group("user").Use(middlewares.OperationRecord())
 	userRouterWithoutRecord := Router.Group("user")
 	baseApi := v1.ApiGroupApp.SysApiGroup.BaseApi
@@ -20,4 +20,5 @@ func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 		userRouterWithoutRecord.POST("register", baseApi.Register)
 
 	}
+	return userRouterWithoutRecord
 }

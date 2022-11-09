@@ -32,7 +32,9 @@ func Routers() *gin.Engine {
 		// 注册基础路由,这些是不用权限控制的
 
 		// useruserRouter.userRouter
+		systemRouter.InitUserRouter(PublicGroup)
 		systemRouter.InitBaseRouter(PublicGroup)
+
 	}
 
 	// 权限路由
@@ -40,7 +42,6 @@ func Routers() *gin.Engine {
 	{
 		userRouter.InitUserRouter(PrivateGroup) // 用户相关路由
 		systemRouter.InitApiRouter(PrivateGroup)
-		systemRouter.InitUserRouter(PrivateGroup)
 		systemRouter.InitArticleTypeRouter(PrivateGroup) // 文章标题相关路由
 		systemRouter.InitArticleTagRouter(PrivateGroup)
 		systemRouter.InitBlogArticleRouter(PrivateGroup)

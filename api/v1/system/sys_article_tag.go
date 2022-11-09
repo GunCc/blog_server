@@ -21,7 +21,10 @@ type ArticleTagApi struct {
 // @Router /article/tag/add [post]
 func (A *ArticleTagApi) CreateArticleTag(c *gin.Context) {
 	var at system.SysArticleTag
-	_ = c.ShouldBindJSON(at)
+	if err := c.ShouldBindJSON(&at); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 	if err := utils.Verify(at, utils.ArticleTagVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -42,7 +45,10 @@ func (A *ArticleTagApi) CreateArticleTag(c *gin.Context) {
 // @Router /article/tag/edit [PUT]
 func (A *ArticleTagApi) EditArticleTag(c *gin.Context) {
 	var at system.SysArticleTag
-	_ = c.ShouldBindJSON(at)
+	if err := c.ShouldBindJSON(&at); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 	if err := utils.Verify(at, utils.ArticleTagVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -63,12 +69,12 @@ func (A *ArticleTagApi) EditArticleTag(c *gin.Context) {
 // @Router /article/tag/delete [delete]
 func (A *ArticleTagApi) DeleteArticleTag(c *gin.Context) {
 	var at system.SysArticleTag
-	_ = c.ShouldBindJSON(at)
-	if err := utils.Verify(at.ID, utils.IdVerify); err != nil {
+	_ = c.ShouldBindJSON(&at)
+	if err := utils.Verify(at, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err := ArticleTagService.DeleteArticleTag(at.ID); err != nil {
+	if err := ArticleTagService.DeleteArticleTag(at.TagId); err != nil {
 		global.BLOG_LOG.Error("删除失败", zap.Error(err))
 		response.FailWithDetailed(err, "删除失败", c)
 		return

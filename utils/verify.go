@@ -4,7 +4,7 @@ var (
 	ApiVerify   = Rules{"Path": {NotEmpty()}, "Description": {NotEmpty()}, "ApiGroup": {NotEmpty()}, "Method": {NotEmpty()}}
 	LoginVerify = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}}
 	// LoginVerify       = Rules{"CaptchaId": {NotEmpty()}, "Captcha": {NotEmpty()}, "Username": {NotEmpty()}, "Password": {NotEmpty()}}
-	RegisterVerify    = Rules{"Username": {NotEmpty()}, "NickName": {NotEmpty()}, "Password": {NotEmpty()}, "AuthorityId": {NotEmpty()}}
+	RegisterVerify    = Rules{"Username": {NotEmpty()}, "NickName": {NotEmpty()}, "Password": {NotEmpty()}}
 	ArticleTypeVerify = Rules{"Title": {NotEmpty()}, "Icon": {NotEmpty()}}
 	ArticleTagVerify  = Rules{"Content": {NotEmpty()}, "Color": {NotEmpty()}}
 	IdVerify          = Rules{"ID": []string{NotEmpty()}}

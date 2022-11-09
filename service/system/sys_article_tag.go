@@ -23,9 +23,9 @@ func (a ArticleTagService) CreateArticleTag(at system.SysArticleTag) (err error)
 
 func (a ArticleTagService) EditArticleTag(at system.SysArticleTag) (err error) {
 	var oldAt system.SysArticleTag
-	err = global.BLOG_DB.Where("id = ?", at.ID).First(&oldAt).Error
+	err = global.BLOG_DB.Where("id = ?", at.TagId).First(&oldAt).Error
 	if oldAt.Color != at.Color || oldAt.Content != at.Content {
-		if !errors.Is(global.BLOG_DB.Where("color = ? or content = ?", at.Color, at.Content).First(&system.SysArticleTag{}).Error, gorm.ErrRecordNotFound) {
+		if !errors.Is(global.BLOG_DB.Where("(color = ? or content = ?) and id != ?", at.Color, at.Content, at.TagId).First(&system.SysArticleTag{}).Error, gorm.ErrRecordNotFound) {
 			return errors.New("存在相同内容或者颜色的博客标签")
 		}
 	}
@@ -39,11 +39,11 @@ func (a ArticleTagService) EditArticleTag(at system.SysArticleTag) (err error) {
 
 func (a ArticleTagService) DeleteArticleTag(id uint) (err error) {
 	var at system.SysArticleTag
-	err = global.BLOG_DB.Where("ID = ?", id).Delete(&at).Error
+	err = global.BLOG_DB.Where("id = ?", id).Delete(&at).Error
 	if err != nil {
 		return err
 	}
-	err = global.BLOG_DB.Delete(&[]system.SysArticleTag{}, "id=?", id).Error
+	err = global.BLOG_DB.Delete(&[]system.SysArticleTag{}, "id = ?", id).Error
 	return err
 }
 

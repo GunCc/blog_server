@@ -1,13 +1,18 @@
 package system
 
-import "blog_server/global"
+import "time"
 
 type SysArticleTag struct {
-	global.BLOG_MODEL
-	Color   string `json:"color" gorm:"comment:标签颜色"`
-	Content string `json:"content" gorm:"comment:标签内容"`
+	// global.
+	CreatedAt time.Time        // 创建时间
+	UpdatedAt time.Time        // 更新时间
+	DeletedAt *time.Time       `sql:"index"`
+	TagId     uint             `json:"tagId" gorm:"not null;unique;primary_key;comment:角色ID;"`
+	Articles  []SysArticleBlog `json:"-" gorm:"many2many:sys_article_to_tags;"`
+	Color     string           `json:"color" gorm:"comment:标签颜色"`
+	Content   string           `json:"content" gorm:"comment:标签内容"`
 }
 
 func (SysArticleTag) TableName() string {
-	return "article_tags"
+	return "sys_article_tags"
 }

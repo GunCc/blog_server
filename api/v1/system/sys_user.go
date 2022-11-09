@@ -5,6 +5,7 @@ import (
 	"blog_server/model/commen/response"
 	"blog_server/model/system"
 	"blog_server/model/system/request"
+	"fmt"
 
 	systemRes "blog_server/model/system/response"
 	"blog_server/utils"
@@ -53,8 +54,13 @@ func (b *BaseApi) Login(c *gin.Context) {
 // @Router /user/register [post]
 func (b *BaseApi) Register(c *gin.Context) {
 	var r request.Register
-	_ = c.ShouldBindJSON(&r)
-	if err := utils.Verify(r, utils.ApiVerify); err != nil {
+	err := c.ShouldBindJSON(&r)
+	if err != nil {
+		fmt.Println("报错：", err)
+		return
+	}
+	fmt.Println("数据：=========", r)
+	if err := utils.Verify(r, utils.RegisterVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
