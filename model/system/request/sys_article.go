@@ -1,6 +1,7 @@
 package request
 
 type ReqArticleBlog struct {
+	ID                uint   `json:"id"`
 	Title             string `json:"title" gorm:"comment:文章标题"`
 	SysArticleTypeIds uint   `json:"article_type"  gorm:"comment:一级标题"`
 	TagsIds           []uint `json:"tags" gorm:"many2many:sys_article_to_tags"`

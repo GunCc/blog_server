@@ -6,8 +6,10 @@ import (
 	"blog_server/model/system"
 	sysReq "blog_server/model/system/request"
 	"errors"
+	"fmt"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type ArticleService struct {
@@ -37,11 +39,12 @@ func (a *ArticleService) CreateArticle(article system.SysArticleBlog) (err error
 
 func (a *ArticleService) DeleteArticle(id uint) (err error) {
 	var at system.SysArticleBlog
-	err = global.BLOG_DB.Delete("id = ?", id).Delete(&at).Error
+	err = global.BLOG_DB.Where("id = ?", id).First(&at).Error
 	if err != nil {
+		fmt.Println(err.Error())
 		return err
 	}
-	err = global.BLOG_DB.Delete(&[]system.SysArticleBlog{}, "id = ?", id).Error
+	err = global.BLOG_DB.Select(clause.Associations).Delete(&at).Error
 	return err
 }
 
@@ -50,18 +53,37 @@ func (a *ArticleService) DeleteArticle(id uint) (err error) {
 //@param: article  article.ID
 //@return: err error
 
-func (a *ArticleService) EditArticle(article system.SysArticleBlog) (err error) {
+func (a *ArticleService) EditArticle(info sysReq.ReqArticleBlog) (err error) {
 	var oldAt system.SysArticleBlog
-	err = global.BLOG_DB.Where("id =?", article.ID).First(&oldAt).Error
-	if oldAt.Title != article.Title {
-		if !errors.Is(global.BLOG_DB.Where("title =?", article.Title).Preload("Tags").First(&system.SysArticleBlog{}).Error, gorm.ErrRecordNotFound) {
+	var newAt system.SysArticleBlog
+	newAt.Title = info.Title
+	newAt.Content = info.Content
+	newAt.ID = info.ID
+	err = global.BLOG_DB.Where("id =?", info.ID).Preload("TagsIds").First(&oldAt).Error
+	if oldAt.Title != info.Title {
+		if !errors.Is(global.BLOG_DB.Where("title =? and id != ?", newAt.Title, newAt.ID).First(&system.SysArticleBlog{}).Error, gorm.ErrRecordNotFound) {
 			return errors.New("存在相同标题")
 		}
+	}
+	if oldAt.SysArticleTypeIds.ID != info.SysArticleTypeIds {
+		if typeInfo, err := a.GetArticleType(info); err != nil {
+			return err
+		} else {
+			newAt.SysArticleTypeIds = typeInfo
+		}
+	}
+
+	if tags, err := a.GetArticleTags(info); err != nil {
+		fmt.Println("报错啦！")
+		return err
+	} else {
+		newAt.TagsIds = tags
 	}
 	if err != nil {
 		return err
 	}
-	return global.BLOG_DB.Updates(&article).Error
+	fmt.Println("最后一步：", newAt)
+	return global.BLOG_DB.Updates(&newAt).Error
 }
 
 func (a *ArticleService) GetArticleList(info request.PageInfo) (list interface{}, total int64, err error) {
@@ -96,9 +118,11 @@ func (a *ArticleService) GetArticleType(info sysReq.ReqArticleBlog) (typeInfo sy
 //@return:  tags []system.SysArticleTag, err error
 
 func (a *ArticleService) GetArticleTags(info sysReq.ReqArticleBlog) (tags []system.SysArticleTag, err error) {
-	var tag system.SysArticleTag
 	for _, v := range info.TagsIds {
+		var tag system.SysArticleTag
+		fmt.Println("v:", v)
 		err = global.BLOG_DB.Where("tag_id = ?", v).First(&tag).Error
+		fmt.Println("tag:", tag)
 		if err != nil {
 			break
 		} else if tag.Color == "" || tag.Content == "" {
@@ -110,5 +134,6 @@ func (a *ArticleService) GetArticleTags(info sysReq.ReqArticleBlog) (tags []syst
 			})
 		}
 	}
+	// err = errors.New("报错")
 	return tags, err
 }

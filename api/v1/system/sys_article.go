@@ -7,6 +7,7 @@ import (
 	"blog_server/model/system"
 	sysReq "blog_server/model/system/request"
 	"blog_server/utils"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -64,13 +65,15 @@ func (A *ArticleApi) CreateArticle(c *gin.Context) {
 // @Router /article/delete [delete]
 func (A *ArticleApi) DeleteArticle(c *gin.Context) {
 	var a system.SysArticleBlog
-	_ = c.ShouldBindJSON(a)
+	_ = c.ShouldBindJSON(&a)
 	if err := utils.Verify(a, utils.IdVerify); err != nil {
-		response.FailWithMessage("操作失败", c)
+		response.FailWithDetailed(err, "操作失败", c)
 		return
 	}
+	fmt.Println(a)
 	if err := ArticleService.DeleteArticle(a.ID); err != nil {
 		response.FailWithDetailed(err, "操作失败", c)
+		return
 	}
 }
 
@@ -81,8 +84,12 @@ func (A *ArticleApi) DeleteArticle(c *gin.Context) {
 // @Success 200 {object} response.Response{msg=string} "修改文章"
 // @Router /article/edit [put]
 func (A *ArticleApi) EditArticle(c *gin.Context) {
-	var a system.SysArticleBlog
+	var a sysReq.ReqArticleBlog
 	_ = c.ShouldBindJSON(&a)
+	if err := utils.Verify(a, utils.IdVerify); err != nil {
+		response.FailWithDetailed(err, "无ID标识符", c)
+		return
+	}
 	if err := utils.Verify(a, utils.ArticleVerify); err != nil {
 		response.FailWithMessage("操作失败", c)
 		return
