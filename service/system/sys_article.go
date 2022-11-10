@@ -96,12 +96,19 @@ func (a *ArticleService) GetArticleType(info sysReq.ReqArticleBlog) (typeInfo sy
 //@return:  tags []system.SysArticleTag, err error
 
 func (a *ArticleService) GetArticleTags(info sysReq.ReqArticleBlog) (tags []system.SysArticleTag, err error) {
-
+	var tag system.SysArticleTag
 	for _, v := range info.TagsIds {
-		tags = append(tags, system.SysArticleTag{
-			TagId: v,
-		})
+		err = global.BLOG_DB.Where("tag_id = ?", v).First(&tag).Error
+		if err != nil {
+			break
+		} else if tag.Color == "" || tag.Content == "" {
+			err = errors.New("标签不存在")
+			break
+		} else {
+			tags = append(tags, system.SysArticleTag{
+				TagId: v,
+			})
+		}
 	}
-
 	return tags, err
 }

@@ -29,7 +29,10 @@ func (A *ArticleApi) CreateArticle(c *gin.Context) {
 		response.FailWithMessage("操作失败", c)
 		return
 	}
-	var a system.SysArticleBlog
+	var a = system.SysArticleBlog{
+		Title:   reqData.Title,
+		Content: reqData.Content,
+	}
 	if typeInfo, err := ArticleService.GetArticleType(reqData); err != nil {
 		global.BLOG_LOG.Error("操作失败", zap.Error(err))
 		response.FailWithDetailed(err, "操作失败", c)
@@ -38,7 +41,8 @@ func (A *ArticleApi) CreateArticle(c *gin.Context) {
 		a.SysArticleTypeIds = typeInfo
 	}
 	if tags, err := ArticleService.GetArticleTags(reqData); err != nil {
-		response.FailWithMessage("操作失败", c)
+		global.BLOG_LOG.Error("操作失败", zap.Error(err))
+		response.FailWithDetailed(err, "操作失败", c)
 		return
 	} else {
 		a.TagsIds = tags
