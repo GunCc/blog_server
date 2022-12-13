@@ -24,6 +24,7 @@ import (
 func (b *BaseApi) Login(c *gin.Context) {
 	var l request.Login
 	_ = c.ShouldBindJSON(&l)
+	fmt.Println(l)
 	if err := utils.Verify(l, utils.LoginVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

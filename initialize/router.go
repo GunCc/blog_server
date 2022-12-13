@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"blog_server/global"
+	"blog_server/middlewares"
 	"blog_server/routers"
 	"net/http"
 
@@ -16,6 +17,9 @@ func Routers() *gin.Engine {
 	Router := gin.Default()
 	userRouter := routers.RouterGroupApp.User
 	systemRouter := routers.RouterGroupApp.System
+
+	// 配置跨域
+	Router.Use(middlewares.Cors())
 
 	// swagger配置
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
